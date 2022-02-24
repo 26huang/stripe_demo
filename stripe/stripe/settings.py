@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import json
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -121,3 +123,13 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+CONF_FILE = os.path.join(BASE_DIR, 'Data', 'config.json')
+
+with open(CONF_FILE, 'r') as f:
+    data = json.load(f)
+
+STRIPE_PUBLIC_KEY = data['public_key']
+STRIPE_SECRET_KEY = data['secret_key']
+STRIPE_WEBHOOK_SECRET = data['webhook']
